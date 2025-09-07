@@ -1,103 +1,80 @@
-import Image from "next/image";
+import type { Metadata } from "next";
+import { client } from "@/sanity/client";
+import { getYouTubeId, buildYouTubeEmbedSrc } from "@/lib/youtube"; 
+export const metadata: Metadata = {
+  title: "Sencer Film",
+  description: "Sencer Film projesi",
+};
 
-export default function Home() {
+// GROQ: fetch the singleton homePage; if you enforce fixed id "homePage", you can add && _id == "homePage"
+const HOMEPAGE_QUERY = /* groq */ `
+*[_type == "homePage"][0]{
+  anaBaslik,
+  baslikAciklama,
+  videoUrl,
+  videoMute
+}
+`;
+
+type HomePageDoc = {
+  anaBaslik?: string;
+  baslikAciklama?: string;
+  videoUrl?: string;
+  videoMute?: boolean;
+};
+
+// Revalidate periodically so content updates are reflected
+const options = { next: { revalidate: 30 } };
+
+export default async function IndexPage() {
+  const data = await client.fetch<HomePageDoc>(HOMEPAGE_QUERY, {}, options);
+
+  const youTubeId = getYouTubeId(data?.videoUrl ?? null);
+  const src = youTubeId ? buildYouTubeEmbedSrc(youTubeId, data?.videoMute ?? true, 0) : null;
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <main className="relative min-h-[100dvh] overflow-hidden">
+      {/* Full-screen background video */}
+      {src && (
+        <iframe
+          title="bg-video"
+          src={src}
+          // merkeze sabitle
+          className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          // COVER hesabı: 16:9 videoyu, viewport’u tamamen kaplayacak EN büyük boyuta büyüt:
+          style={{
+            width: 'max(100vw, 177.78vh)',   // 16:9 için 100vh * 16/9 = 177.78vh
+            height: 'max(56.25vw, 100vh)',   // 16:9 için 100vw * 9/16 = 56.25vw
+          }}
+          allow="autoplay; fullscreen"
+          frameBorder={0}
+          aria-hidden="true"
+          tabIndex={-1}
         />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+      )}
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* A subtle dark overlay to improve text contrast */}
+      <div className="absolute inset-0 bg-black/40" />
+
+      {/* Left-aligned overlay text */}
+      <section className="relative z-10 flex min-h-[100dvh] items-center px-6 lg:px-12">
+        <div className="max-w-4xl flex items-start">
+          {/* Vertical line */}
+          <div className="w-1 bg-[var(--foreground,white)] mr-6 lg:mr-8 self-stretch min-h-[120px] md:min-h-[150px] lg:min-h-[180px]"></div>
+          
+          {/* Text content */}
+          <div className="flex-1">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-barlow font-normal leading-tight text-[var(--foreground,white)]">
+              {data?.anaBaslik ?? "Ana Başlık"}
+            </h1>
+            {data?.baslikAciklama && (
+              <p className="mt-4 text-base md:text-lg lg:text-xl font-poppins font-extralight text-[var(--foreground,white)]/90 max-w-2xl">
+                {data.baslikAciklama}
+              </p>
+            )}
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </section>
+    </main>
   );
 }
