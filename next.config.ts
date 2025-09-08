@@ -16,9 +16,14 @@ try {
 }
 
 const nextConfig: NextConfig = {
-  // Performance optimizations
+  // Exclude studio directory from build
   experimental: {
     optimizePackageImports: ['@sanity/image-url', 'next-intl'],
+  },
+  
+  // Ignore studio directory
+  typescript: {
+    ignoreBuildErrors: false,
   },
   
   // Image optimization

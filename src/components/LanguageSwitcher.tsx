@@ -3,10 +3,10 @@
 import { usePathname, useRouter } from '@/i18n/routing';
 import { useParams, useSearchParams } from 'next/navigation';
 import { locales, type Locale } from '@/i18n/config';
-import { useTransition } from 'react';
+import { useTransition, Suspense } from 'react';
 import { useTranslations } from 'next-intl';
 
-export default function LanguageSwitcher() {
+function LanguageSwitcherInner() {
   const pathname = usePathname();
   const router = useRouter();
   const params = useParams();
@@ -55,5 +55,22 @@ export default function LanguageSwitcher() {
         );
       })}
     </div>
+  );
+}
+
+export default function LanguageSwitcher() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center gap-1 rounded-full bg-white/10 backdrop-blur-sm p-1">
+        <div className="px-3 py-1 rounded-full text-sm font-medium bg-white/20 text-white animate-pulse">
+          TR
+        </div>
+        <div className="px-3 py-1 rounded-full text-sm font-medium text-white/60">
+          EN
+        </div>
+      </div>
+    }>
+      <LanguageSwitcherInner />
+    </Suspense>
   );
 }
