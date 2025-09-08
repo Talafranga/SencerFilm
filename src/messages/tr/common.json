@@ -75,5 +75,19 @@
   },
   "projectDetail": {
     "backToProjects": "← Projelere Geri Dön"
+  },
+  "error": {
+    "title": "Bir Hata Oluştu",
+    "description": "Beklenmeyen bir hata oluştu. Lütfen sayfayı yenileyin.",
+    "reload": "Sayfayı Yenile",
+    "tryAgain": "Tekrar Dene",
+    "notFound": "Sayfa Bulunamadı",
+    "notFoundDescription": "Aradığınız sayfa mevcut değil.",
+    "goHome": "Ana Sayfaya Dön"
+  },
+  "loading": {
+    "title": "Yükleniyor...",
+    "projects": "Projeler yükleniyor...",
+    "content": "İçerik yükleniyor..."
   }
 }

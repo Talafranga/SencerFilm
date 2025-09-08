@@ -75,5 +75,19 @@
   },
   "projectDetail": {
     "backToProjects": "← Back to Projects"
+  },
+  "error": {
+    "title": "An Error Occurred",
+    "description": "An unexpected error occurred. Please refresh the page.",
+    "reload": "Refresh Page",
+    "tryAgain": "Try Again",
+    "notFound": "Page Not Found",
+    "notFoundDescription": "The page you're looking for doesn't exist.",
+    "goHome": "Go to Homepage"
+  },
+  "loading": {
+    "title": "Loading...",
+    "projects": "Loading projects...",
+    "content": "Loading content..."
   }
 }

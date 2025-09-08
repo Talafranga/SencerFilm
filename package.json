@@ -5,8 +5,11 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:analyze": "set ANALYZE=true && next build",
     "start": "next start",
     "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "type-check": "tsc --noEmit",
     "i18n:extract": "tsx scripts/i18n-extract.ts",
     "i18n:extract:dry": "tsx scripts/i18n-extract.ts --dry",
     "i18n:scan": "tsx scripts/i18n-scan.ts"
@@ -27,6 +30,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@next/bundle-analyzer": "^15.5.2",
     "@tailwindcss/postcss": "^4",
     "@types/jscodeshift": "^17.3.0",
     "@types/node": "^20",

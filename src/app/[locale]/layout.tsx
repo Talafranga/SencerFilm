@@ -7,6 +7,7 @@ import { ReactNode } from 'react';
 import { locales, type Locale, localeMetadata } from '@/i18n/config';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import "../globals.css";
 
 const barlow = Barlow({
@@ -84,11 +85,28 @@ export default async function LocaleLayout({
 
   return (
     <html lang={lang} dir={dir}>
+      <head>
+        {/* Favicon */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/sencer-logo.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        
+        {/* PWA Manifest */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#222222" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Sencer Film" />
+      </head>
       <body className={`${barlow.variable} ${poppins.variable} antialiased`}>
         <NextIntlClientProvider messages={messages} locale={currentLocale}>
-          <Navbar />
-          {children}
-          <Footer />
+          <ErrorBoundary>
+            <Navbar />
+            <ErrorBoundary>
+              {children}
+            </ErrorBoundary>
+            <Footer />
+          </ErrorBoundary>
         </NextIntlClientProvider>
       </body>
     </html>
