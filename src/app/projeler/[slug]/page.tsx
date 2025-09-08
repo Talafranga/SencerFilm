@@ -53,7 +53,7 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
 
       {project.description && (
         <div className="mb-8">
-          <p className="text-lg leading-8 text-[hsl(var(--foreground))]">
+          <p className="text-lg leading-8 text-[hsl(var(--foreground))] text-justify">
             {project.description}
           </p>
         </div>

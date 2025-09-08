@@ -48,15 +48,20 @@ const NavLink = ({
   href, 
   children, 
   className, 
-  onClick 
+  onClick,
+  showUnderline = false
 }: {
   href: string;
   children: React.ReactNode;
   className: string;
   onClick?: () => void;
+  showUnderline?: boolean;
 }) => (
   <Link href={href} onClick={onClick} className={className}>
     {children}
+    {showUnderline && (
+      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 ease-out group-hover:w-full"></span>
+    )}
   </Link>
 );
 
@@ -81,7 +86,7 @@ export default function Navbar() {
     }`, [isMobileMenuOpen]
   );
 
-  const desktopNavClasses = "text-white hover:text-gray-300 px-2 lg:px-3 py-2 text-xs lg:text-sm font-medium transition-colors duration-200";
+  const desktopNavClasses = "text-white hover:text-gray-300 px-2 lg:px-3 py-2 text-sm lg:text-base font-medium transition-colors duration-200 relative group";
   const mobileNavClasses = "text-white hover:text-gray-300 hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200";
 
   return (
@@ -110,6 +115,7 @@ export default function Navbar() {
                   key={href}
                   href={href}
                   className={desktopNavClasses}
+                  showUnderline={true}
                 >
                   {label}
                 </NavLink>

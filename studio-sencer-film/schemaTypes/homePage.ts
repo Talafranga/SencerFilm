@@ -17,9 +17,13 @@ export const homePage = defineType({
       type: 'text',
     }),
     defineField({
-      name: 'videoUrl',
-      title: 'Video URL',
-      type: 'url',
+      name: 'videoFile',
+      title: 'Video Dosyası',
+      type: 'file',
+      description: 'Arka plan videosu için MP4 dosyası yükleyin',
+      options: {
+        accept: '.mp4,.mov,.avi,.webm',
+      },
     }),
     defineField({
       name: 'videoMute',

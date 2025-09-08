@@ -6,7 +6,7 @@ import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
 
 // Tekil sayfa türleri (singleton)
-const SINGLETON_TYPES = new Set(['homePage','projectsPage','contactPage','siteSettings'])
+const SINGLETON_TYPES = new Set(['homePage','aboutPage','projectsPage','contactPage','referencesPage','footer','siteSettings'])
 // Tekillere izin verilecek aksiyonlar
 const SINGLETON_ACTIONS = new Set(['publish','discardChanges'])
 

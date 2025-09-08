@@ -28,41 +28,49 @@ function truncateWords(input = "", words = 24) {
   return parts.slice(0, words).join(" ") + "…";
 }
 
-export default function ProjectsGrid({ projects }: { projects: Project[] }) {
+export default function ProjectsGrid({ 
+  projects, 
+  hideFilters = false 
+}: { 
+  projects: Project[];
+  hideFilters?: boolean;
+}) {
   const [active, setActive] = useState<(typeof TABS)[number]["value"]>("all");
 
   const filtered = useMemo(() => {
-    if (active === "all") return projects;
+    if (hideFilters || active === "all") return projects;
     return projects.filter((p) => p.category === active);
-  }, [projects, active]);
+  }, [projects, active, hideFilters]);
 
   return (
     <>
       {/* Tabs */}
-      <div className="mb-8 flex flex-wrap gap-2 justify-center">
-        {TABS.map((t) => {
-          const isActive = active === t.value;
-          return (
-            <button
-              key={t.value}
-              onClick={() => setActive(t.value)}
-              className={[
-                "px-6 py-3 rounded-full text-base font-medium border transition",
-                isActive
-                  ? "bg-white text-black border-white"
-                  : "bg-transparent text-white/80 border-white/30 hover:border-white/60",
-              ].join(" ")}
-            >
-              {t.label}
-            </button>
-          );
-        })}
-      </div>
+      {!hideFilters && (
+        <div className="mb-8 flex flex-wrap gap-2 justify-center">
+          {TABS.map((t) => {
+            const isActive = active === t.value;
+            return (
+              <button
+                key={t.value}
+                onClick={() => setActive(t.value)}
+                className={[
+                  "px-6 py-3 rounded-full text-base font-medium border transition",
+                  isActive
+                    ? "bg-white text-black border-white"
+                    : "bg-transparent text-white/80 border-white/30 hover:border-white/60",
+                ].join(" ")}
+              >
+                {t.label}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div className="flex flex-col space-y-2 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-2 lg:gap-3 md:space-y-0">
         {filtered.map((project) => (
-          <Link key={project._id} href={`/projeler/${project.slug}`} className="block">
+          <Link key={project._id} href={`/projeler/${project.slug}`} className="block md:block">
             <CardContainer className="inter-var md:block hidden">
               <CardBody className="bg-[#0a0a0a] relative group/card hover:shadow-2xl hover:shadow-blue-500/[0.3] dark:hover:shadow-emerald-500/[0.2] bg-gradient-to-br from-[#0a0a0a] to-[#1a1a1a] border-[#262626] hover:border-blue-500/[0.3] w-auto h-[28rem] rounded-2xl p-6 border flex flex-col transition-all duration-300 ease-out hover:bg-gradient-to-br hover:from-[#0f0f0f] hover:to-[#1f1f1f] before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-r before:from-transparent before:via-blue-500/[0.05] before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500">
                 {/* Başlık */}

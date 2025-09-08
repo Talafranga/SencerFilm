@@ -1,6 +1,8 @@
 import {homePage} from './homePage'
+import {aboutPage} from './aboutPage'
 import {contactPage} from './contactPage'
-import {siteSettings} from './siteSettings'
+import {referencesPage} from './referencesPage'
+import {footer} from './footer'
 import {project} from './project'
 
-export const schemaTypes = [homePage, contactPage, siteSettings, project]
+export const schemaTypes = [homePage, aboutPage, contactPage, referencesPage, footer, project]
