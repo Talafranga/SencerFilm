@@ -29,7 +29,6 @@ export default async function ProjectsPage() {
   return (
     <main className="min-h-screen px-6 py-20">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold mb-12 text-center">Projeler</h1>
         <ProjectsGrid projects={projects} />
       </div>
     </main>

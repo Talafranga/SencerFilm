@@ -42,21 +42,6 @@ export default async function AboutSection({
 
   return (
     <section className={`py-12 md:py-20 lg:py-24 bg-background ${className}`}>
-      {showTitle && (
-        <>
-          {/* Hakkımızda Başlığı */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-barlow font-normal leading-tight text-foreground mb-6">
-              Hakkımızda
-            </h2>
-            {/* Dekoratif çizgi */}
-            <div className="flex justify-center">
-              <div className="w-24 h-0.5 bg-primary"></div>
-            </div>
-          </div>
-        </>
-      )}
-      
       <TracingBeam className="px-6 md:px-8 lg:px-12">
         <div className="max-w-2xl mx-auto antialiased pt-8 md:pt-12 relative">
           {aboutData?.content?.map((item, index) => (
