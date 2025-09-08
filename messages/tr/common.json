@@ -1,0 +1,81 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "about": "Hakkımızda",
+    "projects": "Projeler",
+    "references": "Referanslar",
+    "contact": "İletişim",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat"
+  },
+  "hero": {
+    "videoAlt": "Tarayıcınız video oynatmayı desteklemiyor."
+  },
+  "projects": {
+    "title": "Projelerimiz",
+    "viewAll": "Tüm Projelerimiz İçin",
+    "backToProjects": "Projelere Geri Dön",
+    "filters": {
+      "all": "Hepsi",
+      "documentary": "Belgeseller",
+      "tv": "TV Programları",
+      "youtube": "YouTube Kanalları",
+      "website": "İnternet Siteleri"
+    }
+  },
+  "about": {
+    "title": "Hakkımızda"
+  },
+  "contact": {
+    "title": "İletişim",
+    "info": "İletişim Bilgileri",
+    "email": "E-posta",
+    "phone": "Telefon",
+    "address": "Adres",
+    "location": "Konum",
+    "mapTitle": "Konum Haritası",
+    "openInMaps": "Google Maps'te Aç",
+    "mapLoading": "Harita yükleniyor..."
+  },
+  "references": {
+    "title": "Referanslarımız",
+    "noReferences": "Henüz referans eklenmemiş."
+  },
+  "footer": {
+    "rights": "Tüm hakları saklıdır.",
+    "contact": "İletişim"
+  },
+  "meta": {
+    "title": "Sencer Film",
+    "description": "Sencer Film projesi",
+    "about": {
+      "title": "Hakkımızda - Sencer Film",
+      "description": "Sencer Film hakkında bilgiler"
+    },
+    "contact": {
+      "title": "İletişim - Sencer Film",
+      "description": "Sencer Film ile iletişime geçin. Adres, telefon ve e-posta bilgilerimiz."
+    },
+    "references": {
+      "title": "Referanslarımız - Sencer Film",
+      "description": "Sencer Film referansları ve iş ortaklarımız"
+    }
+  },
+  "navbar": {
+    "ana-navigasyon": "Ana navigasyon",
+    "ana-sayfa": "Ana sayfa",
+    "sencer-film-logo": "Sencer Film Logo"
+  },
+  "languageswitcher": {
+    "language-switcher": "Language switcher"
+  },
+  "page": {
+    "tsx": {
+      "tarayiciniz-video-oy": "Tarayıcınız video oynatmayı desteklemiyor.",
+      "tum-projelerimiz-ici": "Tüm Projelerimiz İçin"
+    }
+  },
+  "projeler": {
+    "projelere-geri-don": "← Projelere Geri Dön"
+  }
+}

@@ -2,34 +2,34 @@ import {defineType, defineField, defineArrayMember} from 'sanity'
 
 export const aboutPage = defineType({
   name: 'aboutPage',
-  title: 'Hakkımızda Sayfası',
+  title: 'Hakkımızda Sayfası / About Page',
   type: 'document',
   fields: [
     defineField({
       name: 'content',
-      title: 'İçerik',
+      title: 'İçerik / Content',
       type: 'array',
       of: [
         defineArrayMember({
           type: 'object',
           name: 'contentItem',
-          title: 'İçerik Öğesi',
+          title: 'İçerik Öğesi / Content Item',
           fields: [
             defineField({
               name: 'badge',
-              title: 'Etiket',
-              type: 'string',
+              title: 'Etiket / Badge',
+              type: 'localeString',
               validation: (r) => r.required().error('Etiket alanı zorunludur'),
             }),
             defineField({
               name: 'title',
-              title: 'Başlık',
-              type: 'string',
+              title: 'Başlık / Title',
+              type: 'localeString',
               validation: (r) => r.required().error('Başlık alanı zorunludur'),
             }),
             defineField({
               name: 'image',
-              title: 'Görsel',
+              title: 'Görsel / Image',
               type: 'image',
               options: {
                 hotspot: true,
@@ -37,37 +37,22 @@ export const aboutPage = defineType({
             }),
             defineField({
               name: 'description',
-              title: 'Açıklama',
-              type: 'array',
-              of: [
-                defineArrayMember({
-                  type: 'block',
-                  styles: [
-                    {title: 'Normal', value: 'normal'},
-                  ],
-                  lists: [],
-                  marks: {
-                    decorators: [
-                      {title: 'Strong', value: 'strong'},
-                      {title: 'Emphasis', value: 'em'},
-                    ],
-                    annotations: [],
-                  },
-                }),
-              ],
-              validation: (r) => r.required().min(1).error('Açıklama alanı zorunludur'),
+              title: 'Açıklama / Description',
+              type: 'localeBlockContent',
+              validation: (r) => r.required().error('Açıklama alanı zorunludur'),
             }),
           ],
           preview: {
             select: {
-              title: 'title',
-              badge: 'badge',
+              title: 'title.tr',
+              titleEn: 'title.en',
+              badge: 'badge.tr',
               media: 'image',
             },
-            prepare({title, badge, media}) {
+            prepare({title, titleEn, badge, media}) {
               return {
-                title: title || 'Başlıksız',
-                subtitle: badge || 'Rozetka yok',
+                title: title || titleEn || 'Başlıksız',
+                subtitle: badge || 'Etiket yok',
                 media,
               }
             },

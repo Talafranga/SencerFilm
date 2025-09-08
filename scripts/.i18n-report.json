@@ -1,0 +1,60 @@
+{
+  "extractedTexts": [
+    {
+      "text": "Ana navigasyon",
+      "file": "src\\components\\Navbar.tsx",
+      "line": 97,
+      "type": "attribute",
+      "attributeName": "aria-label",
+      "suggestedKey": "navbar.ana-navigasyon"
+    },
+    {
+      "text": "Ana sayfa",
+      "file": "src\\components\\Navbar.tsx",
+      "line": 102,
+      "type": "attribute",
+      "attributeName": "aria-label",
+      "suggestedKey": "navbar.ana-sayfa"
+    },
+    {
+      "text": "Sencer Film Logo",
+      "file": "src\\components\\Navbar.tsx",
+      "line": 105,
+      "type": "attribute",
+      "attributeName": "alt",
+      "suggestedKey": "navbar.sencer-film-logo"
+    },
+    {
+      "text": "Language switcher",
+      "file": "src\\components\\LanguageSwitcher.tsx",
+      "line": 32,
+      "type": "attribute",
+      "attributeName": "aria-label",
+      "suggestedKey": "languageswitcher.language-switcher"
+    },
+    {
+      "text": "Tarayıcınız video oynatmayı desteklemiyor.",
+      "file": "src\\app\\[locale]\\page.tsx",
+      "line": 76,
+      "type": "jsx-text",
+      "suggestedKey": "page.tsx.tarayiciniz-video-oy"
+    },
+    {
+      "text": "Tüm Projelerimiz İçin",
+      "file": "src\\app\\[locale]\\page.tsx",
+      "line": 131,
+      "type": "jsx-text",
+      "suggestedKey": "page.tsx.tum-projelerimiz-ici"
+    },
+    {
+      "text": "← Projelere Geri Dön",
+      "file": "src\\app\\[locale]\\projeler\\[slug]\\page.tsx",
+      "line": 44,
+      "type": "jsx-text",
+      "suggestedKey": "projeler.projelere-geri-don"
+    }
+  ],
+  "totalFiles": 17,
+  "totalTexts": 7,
+  "skippedTexts": []
+}

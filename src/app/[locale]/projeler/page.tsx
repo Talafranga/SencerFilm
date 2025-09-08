@@ -1,7 +1,10 @@
-// src/app/projeler/page.tsx
+// src/app/[locale]/projeler/page.tsx
 import React from "react";
 import { client } from "@/sanity/client";
 import ProjectsGrid from "@/components/ProjectsGrid";
+import { setRequestLocale } from 'next-intl/server';
+import { type Locale } from '@/i18n/config';
+import { type LocaleString, type LocaleText } from "@/lib/sanity-locale";
 
 const PROJECTS_QUERY = `*[_type == "project"] | order(_createdAt desc) {
   _id,
@@ -14,8 +17,8 @@ const PROJECTS_QUERY = `*[_type == "project"] | order(_createdAt desc) {
 
 type Project = {
   _id: string;
-  name: string;
-  description: string;
+  name: LocaleString;
+  description: LocaleText;
   imageUrl?: string;
   slug: string;
   category: "belgesel" | "tv" | "youtube" | "website";
@@ -23,7 +26,14 @@ type Project = {
 
 export const revalidate = 30;
 
-export default async function ProjectsPage() {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function ProjectsPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale as Locale);
+
   const projects: Project[] = await client.fetch(PROJECTS_QUERY);
 
   return (

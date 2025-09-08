@@ -1,6 +1,7 @@
 import { client } from "@/sanity/client";
 import { urlFor } from "@/lib/sanity-image";
 import Image from "next/image";
+import { getTranslations } from 'next-intl/server';
 
 // GROQ: fetch the singleton referencesPage with references
 const REFERENCES_QUERY = /* groq */ `
@@ -34,6 +35,7 @@ export default async function ReferencesSection({
   className = "" 
 }: ReferencesSectionProps) {
   const referencesData = await client.fetch<ReferencesPageDoc>(REFERENCES_QUERY, {}, options);
+  const t = await getTranslations('common');
 
   return (
     <section className={`py-12 md:py-20 lg:py-24 bg-background ${className}`}>
@@ -42,7 +44,7 @@ export default async function ReferencesSection({
           {/* Referanslar Başlığı */}
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-barlow font-normal leading-tight text-foreground mb-6">
-              Referanslarımız
+              {t('references.title')}
             </h2>
             {/* Dekoratif çizgi */}
             <div className="flex justify-center">
@@ -82,7 +84,7 @@ export default async function ReferencesSection({
         ) : (
           <div className="text-center py-12">
             <p className="text-muted-foreground text-lg">
-              Henüz referans eklenmemiş.
+              {t('references.noReferences')}
             </p>
           </div>
         )}

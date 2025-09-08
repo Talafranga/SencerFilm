@@ -1,0 +1,79 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "references": "References",
+    "contact": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "hero": {
+    "videoAlt": "Your browser does not support video playback."
+  },
+  "projects": {
+    "title": "Our Projects",
+    "viewAll": "View All Projects",
+    "backToProjects": "Back to Projects",
+    "filters": {
+      "all": "All",
+      "documentary": "Documentaries",
+      "tv": "TV Programs",
+      "youtube": "YouTube Channels",
+      "website": "Websites"
+    }
+  },
+  "about": {
+    "title": "About Us"
+  },
+  "contact": {
+    "title": "Contact",
+    "info": "Contact Information",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "location": "Location",
+    "mapTitle": "Location Map",
+    "openInMaps": "Open in Google Maps",
+    "mapLoading": "Loading map..."
+  },
+  "references": {
+    "title": "Our References",
+    "noReferences": "No references added yet."
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "contact": "Contact"
+  },
+  "meta": {
+    "title": "Sencer Film",
+    "description": "Sencer Film project",
+    "about": {
+      "title": "About - Sencer Film",
+      "description": "Information about Sencer Film"
+    },
+    "contact": {
+      "title": "Contact - Sencer Film",
+      "description": "Get in touch with Sencer Film. Our address, phone, and email information."
+    },
+    "references": {
+      "title": "Our References - Sencer Film",
+      "description": "Sencer Film references and business partners"
+    }
+  },
+  "navbar": {
+    "aria-label": "Main navigation",
+    "homeLabel": "Home",
+    "logoAlt": "Sencer Film Logo"
+  },
+  "languageSwitcher": {
+    "label": "Language switcher"
+  },
+  "page": {
+    "videoNotSupported": "Your browser does not support video playback.",
+    "viewAllProjects": "View All Projects"
+  },
+  "projectDetail": {
+    "backToProjects": "← Back to Projects"
+  }
+}

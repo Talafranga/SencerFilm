@@ -4,5 +4,18 @@ import {contactPage} from './contactPage'
 import {referencesPage} from './referencesPage'
 import {footer} from './footer'
 import {project} from './project'
+import {localeString, localeText, localeBlockContent} from './locale'
 
-export const schemaTypes = [homePage, aboutPage, contactPage, referencesPage, footer, project]
+export const schemaTypes = [
+  // Çoklu dil tipleri
+  localeString, 
+  localeText, 
+  localeBlockContent,
+  // Sayfa tipleri
+  homePage, 
+  aboutPage, 
+  contactPage, 
+  referencesPage, 
+  footer, 
+  project
+]

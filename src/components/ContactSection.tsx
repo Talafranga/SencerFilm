@@ -1,4 +1,5 @@
 import { client } from "@/sanity/client";
+import { getTranslations } from 'next-intl/server';
 
 // Contact Icons (Footer'dan aynı icon'ları kullanıyoruz)
 const MailIcon = () => (
@@ -77,6 +78,7 @@ export default async function ContactSection({
   className = "" 
 }: ContactSectionProps) {
   const contactData = await client.fetch<ContactPageData>(CONTACT_QUERY, {}, options);
+  const t = await getTranslations('common');
 
   return (
     <section className={`py-12 md:py-20 lg:py-24 bg-background ${className}`}>
@@ -85,7 +87,7 @@ export default async function ContactSection({
           {/* İletişim Başlığı */}
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-barlow font-normal leading-tight text-foreground mb-6">
-              İletişim
+              {t('contact.title')}
             </h2>
             {/* Dekoratif çizgi */}
             <div className="flex justify-center">
@@ -101,7 +103,7 @@ export default async function ContactSection({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Sol Taraf - İletişim Bilgileri */}
           <div>
-            <h3 className="text-2xl font-bold mb-8 text-foreground">İletişim Bilgileri</h3>
+            <h3 className="text-2xl font-bold mb-8 text-foreground">{t('contact.info')}</h3>
             <div className="space-y-6">
               {/* Email */}
               {contactData?.contactInfo?.email && (
@@ -113,7 +115,7 @@ export default async function ContactSection({
                     <MailIcon />
                   </div>
                   <div>
-                    <p className="font-medium text-foreground">E-posta</p>
+                    <p className="font-medium text-foreground">{t('contact.email')}</p>
                     <p className="text-muted-foreground group-hover:text-accent-foreground transition-colors duration-200">
                       {contactData.contactInfo.email}
                     </p>
@@ -131,7 +133,7 @@ export default async function ContactSection({
                     <PhoneIcon />
                   </div>
                   <div>
-                    <p className="font-medium text-foreground">Telefon</p>
+                    <p className="font-medium text-foreground">{t('contact.phone')}</p>
                     <p className="text-muted-foreground group-hover:text-accent-foreground transition-colors duration-200">
                       {contactData.contactInfo.phone}
                     </p>
@@ -146,7 +148,7 @@ export default async function ContactSection({
                     <AddressIcon />
                   </div>
                   <div>
-                    <p className="font-medium text-foreground">Adres</p>
+                    <p className="font-medium text-foreground">{t('contact.address')}</p>
                     <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
                       {contactData.contactInfo.address}
                     </p>
@@ -159,7 +161,7 @@ export default async function ContactSection({
 
           {/* Sağ Taraf - Google Maps */}
           <div>
-            <h3 className="text-2xl font-bold mb-8 text-foreground">Konum</h3>
+            <h3 className="text-2xl font-bold mb-8 text-foreground">{t('contact.location')}</h3>
             {contactData?.locationMap?.mapEmbedCode ? (
               <div className="space-y-4">
                 {/* Google Maps Embed */}
@@ -172,7 +174,7 @@ export default async function ContactSection({
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Konum Haritası"
+                    title={t('contact.mapTitle')}
                     className="absolute inset-0"
                   />
                 </div>
@@ -187,14 +189,14 @@ export default async function ContactSection({
                       className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors duration-200"
                     >
                       <AddressIcon />
-                      <span>Google Maps'te Aç</span>
+                      <span>{t('contact.openInMaps')}</span>
                     </a>
                   </div>
                 )}
               </div>
             ) : (
               <div className="w-full h-96 bg-muted rounded-lg flex items-center justify-center">
-                <p className="text-muted-foreground">Harita yükleniyor...</p>
+                <p className="text-muted-foreground">{t('contact.mapLoading')}</p>
               </div>
             )}
           </div>

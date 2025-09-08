@@ -1,16 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useState, useCallback, useMemo } from "react";
+import { useTranslations } from "next-intl";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 // Navigation data centralized for better maintainability
 const NAVIGATION_ITEMS = [
-  { href: "/", label: "Ana Sayfa" },
-  { href: "/projeler", label: "Projeler" },
-  { href: "/referanslar", label: "Referanslar" },
-  { href: "/hakkimizda", label: "Hakkımızda" },
-  { href: "/iletisim", label: "İletişim" },
+  { href: "/", labelKey: "nav.home" },
+  { href: "/projeler", labelKey: "nav.projects" },
+  { href: "/referanslar", labelKey: "nav.references" },
+  { href: "/hakkimizda", labelKey: "nav.about" },
+  { href: "/iletisim", labelKey: "nav.contact" },
 ] as const;
 
 // Animated hamburger icon that transforms to X
@@ -67,6 +69,7 @@ const NavLink = ({
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const t = useTranslations('common');
 
   // Optimized handlers with useCallback
   const toggleMobileMenu = useCallback(() => {
@@ -76,6 +79,7 @@ export default function Navbar() {
   const closeMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(false);
   }, []);
+
 
   // Memoized class names for better performance
   const mobileMenuClasses = useMemo(() => 
@@ -90,15 +94,15 @@ export default function Navbar() {
   const mobileNavClasses = "text-white hover:text-gray-300 hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200";
 
   return (
-    <nav className="bg-[#262626] shadow-lg sticky top-0 z-50" role="navigation" aria-label="Ana navigasyon">
+    <nav className="bg-[#262626] shadow-lg sticky top-0 z-50" role="navigation" aria-label={t('navbar.aria-label')}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center" aria-label="Ana sayfa">
+            <Link href="/" className="flex items-center" aria-label={t('navbar.homeLabel')}>
               <Image
                 src="/sencer-logo.png"
-                alt="Sencer Film Logo"
+                alt={t('navbar.logoAlt')}
                 width={120}
                 height={40}
                 className="h-8 w-auto sm:h-10 transition-all duration-200"
@@ -109,27 +113,34 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
-            <div className="ml-4 lg:ml-10 flex items-baseline space-x-4 lg:space-x-8">
-              {NAVIGATION_ITEMS.map(({ href, label }) => (
+            <div className="ml-4 lg:ml-10 flex items-center space-x-4 lg:space-x-8">
+              {NAVIGATION_ITEMS.map(({ href, labelKey }) => (
                 <NavLink
                   key={href}
                   href={href}
                   className={desktopNavClasses}
                   showUnderline={true}
                 >
-                  {label}
+                  {t(labelKey)}
                 </NavLink>
               ))}
+              
+              {/* Language Switcher */}
+              <LanguageSwitcher />
             </div>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Mobile controls */}
+          <div className="md:hidden flex items-center space-x-3">
+            {/* Language Switcher for Mobile */}
+            <LanguageSwitcher />
+            
+            {/* Mobile menu button */}
             <button
               type="button"
               onClick={toggleMobileMenu}
               className="text-white hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-200 p-2 rounded-md hover:scale-105 active:scale-95"
-              aria-label={isMobileMenuOpen ? "Menüyü kapat" : "Menüyü aç"}
+              aria-label={isMobileMenuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
             >
@@ -145,14 +156,14 @@ export default function Navbar() {
           aria-hidden={!isMobileMenuOpen}
         >
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-[#262626] border-t border-gray-700">
-            {NAVIGATION_ITEMS.map(({ href, label }) => (
+            {NAVIGATION_ITEMS.map(({ href, labelKey }) => (
               <NavLink
                 key={href}
                 href={href}
                 onClick={closeMobileMenu}
                 className={mobileNavClasses}
               >
-                {label}
+                {t(labelKey)}
               </NavLink>
             ))}
           </div>

@@ -1,5 +1,8 @@
 // next.config.ts
 import type { NextConfig } from "next";
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 const nextConfig: NextConfig = {
   images: {
@@ -7,10 +10,10 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "cdn.sanity.io",
-        pathname: "/**", // tüm path’lere izin ver
+        pathname: "/**", // tüm path'lere izin ver
       },
     ],
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

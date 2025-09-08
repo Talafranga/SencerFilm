@@ -8,14 +8,14 @@ export const footer = defineType({
     // Ana Başlık ve Açıklama
     defineField({
       name: 'companyTitle',
-      title: 'Şirket Başlığı',
-      type: 'string',
+      title: 'Şirket Başlığı / Company Title',
+      type: 'localeString',
       validation: (r) => r.required().error('Şirket başlığı zorunludur'),
     }),
     defineField({
       name: 'companyDescription',
-      title: 'Şirket Açıklaması',
-      type: 'text',
+      title: 'Şirket Açıklaması / Company Description',
+      type: 'localeText',
       validation: (r) => r.required().error('Şirket açıklaması zorunludur'),
     }),
 
@@ -92,9 +92,9 @@ export const footer = defineType({
     // Copyright
     defineField({
       name: 'copyrightText',
-      title: 'Copyright Metni',
-      type: 'string',
-      description: 'Yıl otomatik olarak eklenir',
+      title: 'Copyright Metni / Copyright Text',
+      type: 'localeString',
+      description: 'Yıl otomatik olarak eklenir / Year is automatically added',
       validation: (r) => r.required().error('Copyright metni zorunludur'),
     }),
   ],

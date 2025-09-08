@@ -1,5 +1,7 @@
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { client } from "@/sanity/client";
+import { getTranslations, getLocale } from 'next-intl/server';
+import { getLocalizedString, getLocalizedText, type LocaleString, type LocaleText } from "@/lib/sanity-locale";
 
 // Social Media Icons
 const InstagramIcon = () => (
@@ -109,11 +111,11 @@ type ContactInfo = {
 };
 
 type FooterData = {
-  companyTitle?: string;
-  companyDescription?: string;
+  companyTitle?: LocaleString;
+  companyDescription?: LocaleText;
   socialLinks?: SocialLink[];
   contactInfo?: ContactInfo;
-  copyrightText?: string;
+  copyrightText?: LocaleString;
 };
 
 // Revalidate periodically so content updates are reflected
@@ -121,8 +123,13 @@ const options = { next: { revalidate: 30 } };
 
 export default async function Footer() {
   const footerData = await client.fetch<FooterData>(FOOTER_QUERY, {}, options);
+  const t = await getTranslations('common');
+  const locale = await getLocale() as 'tr' | 'en';
 
   const currentYear = new Date().getFullYear();
+  const companyTitle = getLocalizedString(footerData?.companyTitle, locale);
+  const companyDescription = getLocalizedText(footerData?.companyDescription, locale);
+  const copyrightText = getLocalizedString(footerData?.copyrightText, locale);
 
   return (
     <footer className="bg-[#0a0a0a] text-white border-t border-gray-800 py-12 md:py-16">
@@ -131,10 +138,10 @@ export default async function Footer() {
           {/* Sencer Film Bölümü */}
           <div className="md:col-span-1">
             <h3 className="text-xl font-bold mb-4">
-              {footerData?.companyTitle || "Sencer Film"}
+              {companyTitle || "Sencer Film"}
             </h3>
             <p className="text-gray-300 mb-6 leading-relaxed text-justify">
-              {footerData?.companyDescription || "Profesyonel film prodüksiyon hizmetleri sunan deneyimli bir ekiptir."}
+              {companyDescription || (locale === 'tr' ? "Profesyonel film prodüksiyon hizmetleri sunan deneyimli bir ekiptir." : "An experienced team providing professional film production services.")}
             </p>
             
             {/* Sosyal Medya Linkleri */}
@@ -159,7 +166,7 @@ export default async function Footer() {
 
           {/* İletişim Bilgileri */}
           <div>
-            <h3 className="text-xl font-bold mb-4">İletişim</h3>
+            <h3 className="text-xl font-bold mb-4">{t('footer.contact')}</h3>
             <div className="space-y-3">
               {/* Email */}
               {(footerData?.contactInfo?.email || "info@sencerfilm.com") && (
@@ -197,7 +204,7 @@ export default async function Footer() {
         {/* Copyright */}
         <div className="border-t border-gray-800 mt-12 pt-8 text-center">
           <p className="text-gray-400">
-            © {currentYear} {footerData?.copyrightText || "Sencer Film. Tüm hakları saklıdır."}
+            © {currentYear} {copyrightText || `Sencer Film. ${t('footer.rights')}`}
           </p>
         </div>
       </div>
