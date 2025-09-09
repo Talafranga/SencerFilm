@@ -23,6 +23,7 @@ function truncateWords(input = "", words = 24) {
   return parts.slice(0, words).join(" ") + "…";
 }
 
+
 export default function ProjectsGrid({ 
   projects, 
   hideFilters = false 
@@ -95,7 +96,7 @@ export default function ProjectsGrid({
                     <CardItem
                       as="p"
                       translateZ="60"
-                      className="text-sm max-w-sm mt-2 text-[hsl(var(--foreground))] leading-relaxed min-h-[4.5rem] overflow-hidden"
+                      className="text-sm max-w-sm mt-4 text-[hsl(var(--foreground))] leading-relaxed min-h-[4.5rem] overflow-hidden"
                     >
                       {truncateWords(projectDescription, 24)}
                     </CardItem>
