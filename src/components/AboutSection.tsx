@@ -11,7 +11,13 @@ const ABOUTPAGE_QUERY = /* groq */ `
   content[]{
     badge,
     title,
-    image,
+    image{
+      ...,
+      asset->{
+        ...,
+        mimeType
+      }
+    },
     description
   }
 }
@@ -20,7 +26,13 @@ const ABOUTPAGE_QUERY = /* groq */ `
 type ContentItem = {
   badge: LocaleString;
   title: LocaleString;
-  image: any;
+  image: {
+    asset: {
+      mimeType: string;
+      [key: string]: any;
+    };
+    [key: string]: any;
+  };
   description: LocaleBlockContent;
 };
 
@@ -63,13 +75,15 @@ export default async function AboutSection({
 
                 <div className="prose prose-lg max-w-none">
                   {item?.image && (
-                    <img
-                      src={urlFor(item.image).width(1000).height(1000).url()}
-                      alt={title || "About image"}
-                      height="1000"
-                      width="1000"
-                      className="rounded-lg mb-6 md:mb-10 object-cover w-full h-auto"
-                    />
+                    <div className={`relative w-full aspect-video mb-6 md:mb-10 rounded-lg overflow-hidden ${
+                      item.image?.asset?.mimeType === 'image/png' ? 'bg-white' : 'bg-gray-50'
+                    }`}>
+                      <img
+                        src={urlFor(item.image).width(800).url()}
+                        alt={title || "About image"}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
                   )}
                   <div className="text-lg leading-8 text-muted-foreground text-justify">
                     <PortableText value={description} />
