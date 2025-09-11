@@ -18,10 +18,21 @@ const ABOUTPAGE_QUERY = /* groq */ `
         mimeType
       }
     },
-    description
+    description,
+    links[]{
+      title,
+      url,
+      openInNewTab
+    }
   }
 }
 `;
+
+type LinkItem = {
+  title: LocaleString;
+  url: string;
+  openInNewTab?: boolean;
+};
 
 type ContentItem = {
   badge: LocaleString;
@@ -34,6 +45,7 @@ type ContentItem = {
     [key: string]: any;
   };
   description: LocaleBlockContent;
+  links?: LinkItem[];
 };
 
 type AboutPageDoc = {
@@ -88,6 +100,42 @@ export default async function AboutSection({
                   <div className="text-lg leading-8 text-muted-foreground text-justify">
                     <PortableText value={description} />
                   </div>
+                  
+                  {/* Links */}
+                  {item.links && item.links.length > 0 && (
+                    <div className="flex flex-wrap gap-3 mt-6">
+                      {item.links.map((link, linkIndex) => {
+                        const linkTitle = getLocalizedString(link.title, locale);
+                        return (
+                          <a
+                            key={linkIndex}
+                            href={link.url}
+                            target={link.openInNewTab ? "_blank" : "_self"}
+                            rel={link.openInNewTab ? "noopener noreferrer" : undefined}
+                            className="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground font-medium rounded-lg hover:bg-primary/90 transition-colors duration-200 shadow-sm hover:shadow-md"
+                          >
+                            {linkTitle}
+                            {link.openInNewTab && (
+                              <svg
+                                className="ml-2 w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                />
+                              </svg>
+                            )}
+                          </a>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               </div>
             );
