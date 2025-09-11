@@ -6,17 +6,25 @@ import { setRequestLocale, getTranslations, getLocale } from 'next-intl/server';
 import { type Locale } from '@/i18n/config';
 import { getLocalizedString, getLocalizedText, type LocaleString, type LocaleText } from "@/lib/sanity-locale";
 
-// GROQ: fetch the singleton homePage with video file
+// GROQ: fetch the singleton homePage with video file and featured projects
 const HOMEPAGE_QUERY = /* groq */ `
 *[_type == "homePage"][0]{
   anaBaslik,
   baslikAciklama,
   "videoFileUrl": videoFile.asset->url,
-  videoMute
+  videoMute,
+  "featuredProjects": featuredProjects[]->{
+    _id,
+    name,
+    description,
+    "imageUrl": image.asset->url,
+    "slug": slug.current,
+    category
+  }
 }
 `;
 
-// GROQ: fetch the latest 3 projects
+// GROQ: fallback to latest 3 projects if no featured projects are selected
 const LATEST_PROJECTS_QUERY = `*[_type == "project"] | order(_createdAt desc)[0...3] {
   _id,
   name,
@@ -31,6 +39,7 @@ type HomePageDoc = {
   baslikAciklama?: LocaleText;
   videoFileUrl?: string;
   videoMute?: boolean;
+  featuredProjects?: Project[];
 };
 
 type Project = {
@@ -54,10 +63,12 @@ export default async function IndexPage({ params }: Props) {
   setRequestLocale(locale as Locale);
   const t = await getTranslations('common');
 
-  const [homeData, latestProjects] = await Promise.all([
-    client.fetch<HomePageDoc>(HOMEPAGE_QUERY, {}, options),
-    client.fetch<Project[]>(LATEST_PROJECTS_QUERY, {}, options)
-  ]);
+  const homeData = await client.fetch<HomePageDoc>(HOMEPAGE_QUERY, {}, options);
+  
+  // Use featured projects if available, otherwise fallback to latest projects
+  const displayProjects = homeData?.featuredProjects?.length 
+    ? homeData.featuredProjects 
+    : await client.fetch<Project[]>(LATEST_PROJECTS_QUERY, {}, options);
 
   const currentLocale = await getLocale() as 'tr' | 'en';
   const videoUrl = homeData?.videoFileUrl;
@@ -111,8 +122,8 @@ export default async function IndexPage({ params }: Props) {
       {/* About Section */}
       <AboutSection showTitle={true} />
 
-      {/* Latest Projects Section */}
-      {latestProjects && latestProjects.length > 0 && (
+      {/* Featured/Latest Projects Section */}
+      {displayProjects && displayProjects.length > 0 && (
         <section className="min-h-screen px-6 py-20">
           <div className="max-w-7xl mx-auto">
             {/* Projelerimiz Başlığı */}
@@ -125,7 +136,7 @@ export default async function IndexPage({ params }: Props) {
                 <div className="w-24 h-0.5 bg-primary"></div>
               </div>
             </div>
-            <ProjectsGrid projects={latestProjects} hideFilters={true} />
+            <ProjectsGrid projects={displayProjects} hideFilters={true} />
             
             {/* View All Projects Button */}
             <div className="flex justify-center mt-12">
