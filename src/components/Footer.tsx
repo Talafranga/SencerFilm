@@ -92,11 +92,12 @@ const FOOTER_QUERY = /* groq */ `
   contactInfo{
     email,
     phone,
+    phoneEn,
+    phoneAr,
     address
   },
   copyrightText
-}
-`;
+}`;
 
 type SocialLink = {
   platform: string;
@@ -107,6 +108,8 @@ type SocialLink = {
 type ContactInfo = {
   email: string;
   phone: string;
+  phoneEn: string;
+  phoneAr: string;
   address: string;
 };
 
@@ -179,15 +182,49 @@ export default async function Footer() {
                 </a>
               )}
               
-              {/* Phone */}
-              {(footerData?.contactInfo?.phone || "+90 555 123 4567") && (
-                <a 
-                  href={`tel:${footerData?.contactInfo?.phone || "+90 555 123 4567"}`}
-                  className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors duration-200"
-                >
+              {/* Phone Numbers */}
+              {(footerData?.contactInfo?.phone || footerData?.contactInfo?.phoneEn || footerData?.contactInfo?.phoneAr || "+90 555 123 4567") && (
+                <div className="flex items-start gap-3 text-gray-300">
                   <PhoneIcon />
-                  <span>{footerData?.contactInfo?.phone || "+90 555 123 4567"}</span>
-                </a>
+                  <div className="flex-1">
+                    <p className="font-medium mb-2">{t('footer.contact') === 'İletişim' ? 'Telefon' : 'Phone'}</p>
+                    <div className="space-y-1">
+                      {(footerData?.contactInfo?.phone || "+90 555 123 4567") && (
+                        <div>
+                          <p className="text-xs text-gray-400 mb-1">Türkçe</p>
+                          <a 
+                            href={`tel:${footerData?.contactInfo?.phone || "+90 555 123 4567"}`}
+                            className="text-gray-300 hover:text-white transition-colors duration-200 block"
+                          >
+                            {footerData?.contactInfo?.phone || "+90 555 123 4567"}
+                          </a>
+                        </div>
+                      )}
+                      {footerData?.contactInfo?.phoneEn && (
+                        <div>
+                          <p className="text-xs text-gray-400 mb-1">for English</p>
+                          <a 
+                            href={`tel:${footerData.contactInfo.phoneEn}`}
+                            className="text-gray-300 hover:text-white transition-colors duration-200 block"
+                          >
+                            {footerData.contactInfo.phoneEn}
+                          </a>
+                        </div>
+                      )}
+                      {footerData?.contactInfo?.phoneAr && (
+                        <div>
+                          <p className="text-xs text-gray-400 mb-1">for Arabic</p>
+                          <a 
+                            href={`tel:${footerData.contactInfo.phoneAr}`}
+                            className="text-gray-300 hover:text-white transition-colors duration-200 block"
+                          >
+                            {footerData.contactInfo.phoneAr}
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               )}
               
               {/* Address */}

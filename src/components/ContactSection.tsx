@@ -30,18 +30,21 @@ const CONTACT_QUERY = /* groq */ `
   contactInfo{
     email,
     phone,
+    phoneEn,
+    phoneAr,
     address
   },
   locationMap{
     mapEmbedCode,
     mapShareUrl
   }
-}
-`;
+}`;
 
 type ContactInfo = {
   email: string;
   phone: string;
+  phoneEn: string;
+  phoneAr: string;
   address: string;
 };
 
@@ -123,22 +126,51 @@ export default async function ContactSection({
                 </a>
               )}
 
-              {/* Phone */}
-              {contactData?.contactInfo?.phone && (
-                <a 
-                  href={`tel:${contactData.contactInfo.phone}`}
-                  className="flex items-center gap-4 p-4 rounded-lg bg-card hover:bg-accent transition-colors duration-200 group"
-                >
-                  <div className="text-primary group-hover:text-accent-foreground transition-colors duration-200">
+              {/* Phone Numbers */}
+              {(contactData?.contactInfo?.phone || contactData?.contactInfo?.phoneEn || contactData?.contactInfo?.phoneAr) && (
+                <div className="flex items-start gap-4 p-4 rounded-lg bg-card">
+                  <div className="text-primary mt-1">
                     <PhoneIcon />
                   </div>
-                  <div>
-                    <p className="font-medium text-foreground">{t('contact.phone')}</p>
-                    <p className="text-muted-foreground group-hover:text-accent-foreground transition-colors duration-200">
-                      {contactData.contactInfo.phone}
-                    </p>
+                  <div className="flex-1">
+                    <p className="font-medium text-foreground mb-2">{t('contact.phone')}</p>
+                    <div className="space-y-2">
+                      {contactData?.contactInfo?.phone && (
+                        <div>
+                          <p className="text-sm text-muted-foreground mb-1">Türkçe</p>
+                          <a 
+                            href={`tel:${contactData.contactInfo.phone}`}
+                            className="text-foreground hover:text-primary transition-colors duration-200"
+                          >
+                            {contactData.contactInfo.phone}
+                          </a>
+                        </div>
+                      )}
+                      {contactData?.contactInfo?.phoneEn && (
+                        <div>
+                          <p className="text-sm text-muted-foreground mb-1">for English</p>
+                          <a 
+                            href={`tel:${contactData.contactInfo.phoneEn}`}
+                            className="text-foreground hover:text-primary transition-colors duration-200"
+                          >
+                            {contactData.contactInfo.phoneEn}
+                          </a>
+                        </div>
+                      )}
+                      {contactData?.contactInfo?.phoneAr && (
+                        <div>
+                          <p className="text-sm text-muted-foreground mb-1">for Arabic</p>
+                          <a 
+                            href={`tel:${contactData.contactInfo.phoneAr}`}
+                            className="text-foreground hover:text-primary transition-colors duration-200"
+                          >
+                            {contactData.contactInfo.phoneAr}
+                          </a>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </a>
+                </div>
               )}
 
               {/* Address */}
