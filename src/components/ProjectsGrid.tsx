@@ -33,14 +33,14 @@ export default function ProjectsGrid({
 }) {
   const t = useTranslations('common');
   const locale = useLocale() as 'tr' | 'en';
-  const [active, setActive] = useState<"all" | "belgesel" | "tv" | "youtube" | "website">("all");
+  const [active, setActive] = useState<"all" | "belgesel" | "tv" | "youtube" | "website">("belgesel");
   
   const TABS = [
-    { label: t('projects.filters.all'), value: "all" as const },
     { label: t('projects.filters.documentary'), value: "belgesel" as const },
     { label: t('projects.filters.tv'), value: "tv" as const },
     { label: t('projects.filters.youtube'), value: "youtube" as const },
     { label: t('projects.filters.website'), value: "website" as const },
+    { label: t('projects.filters.all'), value: "all" as const },
   ];
 
   const filtered = useMemo(() => {
